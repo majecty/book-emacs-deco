@@ -97,7 +97,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="시작하기.html"><strong aria-hidden="true">1.</strong> 시작하기</a></li><li class="chapter-item expanded "><a href="이맥스-리스프-시작하기.html"><strong aria-hidden="true">2.</strong> emacs lisp 시작하기</a></li><li class="chapter-item expanded "><a href="페키지-추가하기.html"><strong aria-hidden="true">3.</strong> 패키지 추가하기</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="start.html"><strong aria-hidden="true">1.</strong> 시작하기</a></li><li class="chapter-item expanded "><a href="get-started-emacs-lisp.html"><strong aria-hidden="true">2.</strong> emacs lisp 시작하기</a></li><li class="chapter-item expanded "><a href="add-packages.html"><strong aria-hidden="true">3.</strong> 패키지 추가하기</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -166,14 +166,14 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#시작하기" id="시작하기">시작하기</a></h1>
-<p>이 문서는 이맥스를 꾸미는 문서입니다. 이미 잘 꾸며진 이맥스를 쓰고
-싶으신 분들은 다른 사람들이 꾸민 버전을 사용하세요. <a href="https://github.com/hlissner/doom-emacs">doom
-emacs</a>나
+<p>이 문서는 바닥부터 이맥스를 꾸미는 방법을 설명합니다. 이미 잘 꾸며진
+이맥스를 쓰고 싶으신 분들은 다른 사람들이 꾸민 버전을 사용하세요.
+<a href="https://github.com/hlissner/doom-emacs">doom emacs</a>나
 <a href="https://www.spacemacs.org/">spacemacs</a>를 사용하면 다른 사람이 미리
 꾸며놓은 버전을 쉽게 사용할 수 있습니다.</p>
 <p><a href="https://blog.majecty.com">박주형</a>이 작성했습니다.</p>
 <h1><a class="header" href="#emacs-lisp-시작하기" id="emacs-lisp-시작하기">emacs lisp 시작하기</a></h1>
-<p>이맥스 설정파일은 이맥스 리스프 소스코드로 이루어져있습니다. 이랙스
+<p>이맥스 설정파일은 이맥스 리스프 소스코드로 이루어져있습니다. 이맥스
 리스프의 기초를 알고 있으면 설정을 할 때 도움이 됩니다.</p>
 <h2><a class="header" href="#함수의-호출" id="함수의-호출">함수의 호출</a></h2>
 <p>리스프는 <code>(fun-name arg0 arg1)</code> 형태로 함수를 호출합니다. 다른 언어와
@@ -212,10 +212,10 @@ emacs</a>나
 입장에서 자세한 내용을 알 필요 없습니다.</p>
 <h3><a class="header" href="#함수와-변수의-구분" id="함수와-변수의-구분">함수와 변수의 구분</a></h3>
 <p>emacs lisp는 함수와 변수의 영역을 구분합니다. 함수를 다른 함수의
-인자로 보낼 때는 작은 따옴표를 함수 이름 앞에 붙여주어야 합니다. 언재
-' 를 붙여야 하는지 이해할 필요는 없습니다. 다른 예시코드를을 보고 ' 를
-붙이고 있다면 따라서 붙여주고, ' 가 안붙어 있다면 따라서 안 붙여주면
-됩니다.</p>
+인자로 보낼 때는 작은 따옴표를 함수 이름 앞에 붙여주어야 합니다. 언제
+<code>'</code> 를 붙여야 하는지 이해할 필요는 없습니다. 다른 예시코드를을 보고
+<code>'</code> 를 붙이고 있다면 따라서 붙여주고, <code>'</code> 가 안붙어 있다면 따라서 안
+붙여주면 됩니다.</p>
 <pre><code class="language-elisp">;; 아래 설정을 통해
 ;; f5 키를 누르면 build-project 함수가 호출되게 만들 수 있습니다.
 (global-set-key (kbd &quot;&lt;f5&gt;&quot;) 'build-project)
