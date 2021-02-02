@@ -1,0 +1,6 @@
+[book]
+authors = ["ParkJuhyung"]
+language = "ko"
+multilingual = false
+src = "src"
+title = "이맥스 꾸미기"
