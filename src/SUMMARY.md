@@ -1,6 +1,6 @@
 # Summary
 
-- [시작하기](./시작하기.md)
-- [emacs lisp 시작하기](./이맥스-리스프-시작하기.md)
-- [패키지 추가하기](./페키지-추가하기.md)
+- [시작하기](./start.md)
+- [emacs lisp 시작하기](./get-started-emacs-lisp.md)
+- [패키지 추가하기](./add-packages.md)
 
