@@ -95,7 +95,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="start.html"><strong aria-hidden="true">1.</strong> 시작하기</a></li><li class="chapter-item expanded "><a href="get-started-emacs-lisp.html"><strong aria-hidden="true">2.</strong> emacs lisp 시작하기</a></li><li class="chapter-item expanded "><a href="add-packages.html" class="active"><strong aria-hidden="true">3.</strong> 패키지 추가하기</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="start.html"><strong aria-hidden="true">1.</strong> 시작하기</a></li><li class="chapter-item expanded "><a href="get-started-emacs-lisp.html"><strong aria-hidden="true">2.</strong> emacs lisp 시작하기</a></li><li class="chapter-item expanded "><a href="what-is-this.html"><strong aria-hidden="true">3.</strong> 이건 무슨 문법이지</a></li><li class="chapter-item expanded "><a href="get-started-config-file.html"><strong aria-hidden="true">4.</strong> 설정 파일 시작하기</a></li><li class="chapter-item expanded "><a href="add-packages.html" class="active"><strong aria-hidden="true">5.</strong> 패키지 추가하기</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -164,13 +164,81 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#패키지-추가하기" id="패키지-추가하기">패키지 추가하기</a></h1>
+<p>꾸미기의 시작은 패키지입니다. 다른 사람들이 만들어 둔 유용한 도구들을
+잔뜩 설치해서 나만의 이맥스를 만들어 봅시다.</p>
+<p>emacs에서 패키지를 관리하는 방식은 여러가지가 있습니다. 그 중
+use-package를 사용한 방법을 알려드리겠습니다. use-package는 패키지
+설치와 설정을 한 곳에 묶을 수 있어 설정파일 관리를 더 쉽게 만들어
+줍니다.</p>
+<h2><a class="header" href="#use-package-설치하기" id="use-package-설치하기">use-package 설치하기</a></h2>
+<p>use-package를 설치하고 나면 다른 패키지들은 쉽게 설치할 수 있습니다.
+하지만 use-package는 use-package로 설치할 수 없기 때문에 약간의 귀찮은
+과정을 거쳐야 합니다.</p>
+<h3><a class="header" href="#melpa-저장소-추가" id="melpa-저장소-추가">melpa 저장소 추가</a></h3>
+<pre><code class="language-elisp">(require 'package)
+(add-to-list 'package-archives '(&quot;melpa&quot; . &quot;https://melpa.org/packages/&quot;) t)
+(package-initialize)
+</code></pre>
+<p>use-package package는 melpa에서 다운받을 수 있습니다. 위 세 줄을 emacs
+설정 파일에 추가해 주세요.</p>
+<p>emacs의 패키지들은 elpa와 melpa에서 다운받을 수 있습니다. elpa는
+이맥스 공식 레포지토리며 melpa에 비해 패키지를 올리기가 어렵습니다.
+melpa는 공식 레포는 아니지만 쉽게 패키지를 올릴 수 있고 이미 많은 패키지들이 올라가 있습니다.<sup class="footnote-reference"><a href="#elpa-melpa">1</a></sup></p>
+<div class="footnote-definition" id="elpa-melpa"><sup class="footnote-definition-label">1</sup>
+<p>StackOverflow의 <a href="https://emacs.stackexchange.com/a/270/11743">이
+답변</a>이 잘 설명하고
+있습니다.</p>
+</div>
+<h3><a class="header" href="#package-install-명령으로-use-package-설치하기" id="package-install-명령으로-use-package-설치하기">package-install 명령으로 use-package 설치하기</a></h3>
+<p>melpa 저장소를 추가했다면(위의 세 줄을 작성한 뒤 이맥스를 껐다 켜거나,
+하나 하나 <code>ctrl-x ctrl-e</code>로 실행해 주세요.) package-install 명령어로
+use-package를 설치할 수 있습니다.</p>
+<p><code>alt-x</code>를<sup class="footnote-reference"><a href="#alt-meta">2</a></sup> 누르시면 이맥스 화면 아래에 emacs 함수를 실행할
+수 있는 창이 하나 뜹니다. 앞으로 이 창을 매우 많이 쓸 예정입니다. 이
+창에서 <code>package-refresh-contents</code>를 치고 엔터를 쳐주세요. 이맥스가
+melpa의 패키지 목록을 다운받아 올 거에요. 잠시 시간이 걸릴 수
+있습니다.</p>
+<p>다시 <code>alt-x</code>를 치고 <code>package-install</code>을 치고 엔터를 칩니다. 그러면
+이맥스가 설치할 패키지를 물어볼텐데 여기에 &quot;use-package&quot;를 입력하고
+엔터를 쳐주세요. 별다른 에러가 나지 않았다면 &quot;use-package&quot; 패키지가 잘 설치된 겁니다.</p>
+<div class="footnote-definition" id="alt-meta"><sup class="footnote-definition-label">2</sup>
+<p>이맥스에서는 alt 대신 M 혹은 meta를 자주 씁니다. 이
+글에서는 alt를 쓸게요. alt와 meta의 관계는 좀 복잡합니다. 여기서
+다루진 않을게요.</p>
+</div>
+<h3><a class="header" href="#use-package-설정하기" id="use-package-설정하기">use-package 설정하기</a></h3>
+<p>설정파일에 아래 두 줄의 코드를 추가합니다.<sup class="footnote-reference"><a href="#use-package-config">3</a></sup></p>
+<pre><code class="language-elisp">(eval-when-compile
+  (require 'use-package))
+</code></pre>
+<p>위 두 라인을 실행하면 use-package 설정이 끝납니다.</p>
+<div class="footnote-definition" id="use-package-config"><sup class="footnote-definition-label">3</sup>
+<p><a href="https://github.com/jwiegley/use-package#getting-started">use-package README.md의 Getting
+started</a>
+챕터에 적혔는 내용입니다.</p>
+</div>
+<h3><a class="header" href="#첫-번째-패키지-doom-modeline-설치하기" id="첫-번째-패키지-doom-modeline-설치하기">첫 번째 패키지: doom-modeline 설치하기</a></h3>
+<p>emacs의 버퍼 아래엔 현재 수정하고 있는 파일이 무엇인지 보여주는 한
+줄의 ui가 있습니다. 이를 mode line이라고 부릅니다. 기본 UI가 투박하기
+때문에 많은 사람들이 이 UI를 개선해서 사용합니다. doom-modeline도
+mode-line을 꾸며주는 패키지 입니다.</p>
+<pre><code class="language-elisp">(use-package doom-modeline
+  :ensure t
+  :hook (after-init . doom-modeline-mode))
+</code></pre>
+<p>위 세 줄을 설정파일에 추가하고 실행합니다. 그러면 doom-modeline의 설치
+밎 설정이 끝납니다. 참 쉽죠. 위에 보시면 <code>(after-init . doom-modeline-mode)</code> 코드가 있습니다. 이는 use-package의 인자로
+emacs가 켜졌을 때 <code>(doom-modeline-mode)</code> 함수를 실행하라는 의미입니다.
+emacs를 껐다 켜기 귀잖으신 분들은 <code>alt-x</code> 누른 뒤
+<code>doom-modeline-mode</code>를 실행하여 수동으로 킬 수도 있습니다. 실행하시면
+modeline이 깔끔해진 것을 볼 수 있습니다.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-                            <a rel="prev" href="get-started-emacs-lisp.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="get-started-config-file.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
@@ -184,7 +252,7 @@
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a rel="prev" href="get-started-emacs-lisp.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="get-started-config-file.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 

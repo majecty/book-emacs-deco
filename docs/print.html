@@ -97,7 +97,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="start.html"><strong aria-hidden="true">1.</strong> 시작하기</a></li><li class="chapter-item expanded "><a href="get-started-emacs-lisp.html"><strong aria-hidden="true">2.</strong> emacs lisp 시작하기</a></li><li class="chapter-item expanded "><a href="add-packages.html"><strong aria-hidden="true">3.</strong> 패키지 추가하기</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="start.html"><strong aria-hidden="true">1.</strong> 시작하기</a></li><li class="chapter-item expanded "><a href="get-started-emacs-lisp.html"><strong aria-hidden="true">2.</strong> emacs lisp 시작하기</a></li><li class="chapter-item expanded "><a href="what-is-this.html"><strong aria-hidden="true">3.</strong> 이건 무슨 문법이지</a></li><li class="chapter-item expanded "><a href="get-started-config-file.html"><strong aria-hidden="true">4.</strong> 설정 파일 시작하기</a></li><li class="chapter-item expanded "><a href="add-packages.html"><strong aria-hidden="true">5.</strong> 패키지 추가하기</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -210,7 +210,7 @@
 만들 때 자주 사용합니다.</p>
 <p>페어와 리스트는 알고 보면 같은 걸 의미하지만 설정파일을 만드는
 입장에서 자세한 내용을 알 필요 없습니다.</p>
-<h3><a class="header" href="#함수와-변수의-구분" id="함수와-변수의-구분">함수와 변수의 구분</a></h3>
+<h2><a class="header" href="#함수와-변수의-구분" id="함수와-변수의-구분">함수와 변수의 구분</a></h2>
 <p>emacs lisp는 함수와 변수의 영역을 구분합니다. 함수를 다른 함수의
 인자로 보낼 때는 작은 따옴표를 함수 이름 앞에 붙여주어야 합니다. 언제
 <code>'</code> 를 붙여야 하는지 이해할 필요는 없습니다. 다른 예시코드를을 보고
@@ -220,7 +220,160 @@
 ;; f5 키를 누르면 build-project 함수가 호출되게 만들 수 있습니다.
 (global-set-key (kbd &quot;&lt;f5&gt;&quot;) 'build-project)
 </code></pre>
+<h2><a class="header" href="#config-foo-같이-콜론-뒤에-글자가-오는-행태는-심볼을-만듭니다" id="config-foo-같이-콜론-뒤에-글자가-오는-행태는-심볼을-만듭니다">:config :foo 같이 콜론 뒤에 글자가 오는 행태는 심볼을 만듭니다</a></h2>
+<p>emacs lisp 설정에 사용되는 함수들을 보다 보면 python의 keyword
+인자같은 문법을 볼 때가 있습니다. 뒤에서 사용할 <code>use-package</code> 함수가
+바로 그런 함수입니다. </p>
+<h1><a class="header" href="#이건-무슨-문법이지" id="이건-무슨-문법이지">이건 무슨 문법이지</a></h1>
+<p>다른 사람들이 만든 설정파일을 읽거나, 새로운 플러인을 사용하는 예시
+코드를 읽다 보면 어떤 문법인지 궁금할 때가 있습니다. 이 페이지는 그런
+물법들을 소개합니다.</p>
+<h2><a class="header" href="#함수-앞에--붙이기" id="함수-앞에--붙이기">함수 앞에 #' 붙이기</a></h2>
+<p>이전 페이지에서 함수를 인자로 넘길 때 함수 이름 앞에 <code>'</code>를 붙인다고
+했습니다. 주로 새로운 키를 매핑할 때 자주 사용하게 됩니다. 간혹 <code>'</code> 대신
+<code>#'</code>가 사용되는 것을 볼 수 있습니다. <code>#'</code>는 <code>'</code>를 쓰는 것과 거의 똑같습니다.
+설정파일 수준에서는 그 차이점을 알 필요는 없습니다.</p>
+<p>둘이 다른 점은, 다음과 같습니다. <code>'</code>는 함수 이외에도 붙일 수 있지만
+<code>#'</code>는 함수 앞에만 붙입니다. 따라서 컴파일할 때 더 최적화할 여지가
+있습니다.</p>
+<p><a href="https://emacs.stackexchange.com/a/35989/11743">관련 stack
+overflow답변</a>입니다.
+<a href="http://www.gnu.org/software/emacs/manual/html_node/elisp/Anonymous-Functions.html">관련 emacs lisp manual
+글</a>입니다.</p>
+<h2><a class="header" href="#progn은-무엇인가" id="progn은-무엇인가">progn은 무엇인가</a></h2>
+<p>간혹 함수를 하나 넣을 자리에 여러 함수를 호출하고 싶을 때가 있습니다.
+그럴 땐 progn을 사용하면 됩니다. progn 함수는 다른 언어의 block과
+유사합니다. progn 함수의 인자로 여러 함수콜들을 나열하면, progn은
+각각의 함수콜을 차례 차례 실행한 뒤 마지막 함수콜의 결과를 반환합니다.</p>
+<pre><code class="language-elisp">;; 아래 코드는 hi메시지를 message 버퍼에 기록하고,
+;; 3을 계산한 뒤 버리고, 12를 리턴합니다.
+(progn
+  (message &quot;hi&quot;)
+  (+ 1 2)
+  (* 1 3 4))
+</code></pre>
+<h1><a class="header" href="#설정-파일-시작하기" id="설정-파일-시작하기">설정 파일 시작하기</a></h1>
+<p>커스터마이징의 시작과 끝을 설정파일을 꾸미는 것입니다. 설정파일을
+변경하고 해당 파일을 emacs가 읽는 것을 확인해 봅시다. 설정파일의
+위치가 헷갈리면 조금 고생할 수도 있습니다. 차분히 따라하면 문제 없을
+거에요.</p>
+<h2><a class="header" href="#설정파일-열기" id="설정파일-열기">설정파일 열기</a></h2>
+<p>emacs를 켠 뒤 <code>ctrl-x ctrl-f</code> 를 입력합니다. 이 때 뜨는 창에서
+<code>~/.emacs.d/init.el</code> 을 입력하고 엔터를 칩니다. 이렇게 하면 설정파일이
+열립니다.</p>
+<p>설정파일이 생성되는 위치는 macOS나 Linux라면 home 디렉토리의
+emacs.d/init.el에, Windows라면
+%HOMEPATH%\AppData\Roaming.emacs.d\init.el에 생성됩니다.<sup class="footnote-reference"><a href="#1">1</a></sup></p>
+<div class="footnote-definition" id="1"><sup class="footnote-definition-label">1</sup>
+<p>직접 windows에서 확인해보진 않았습니다.
+<a href="http://ergoemacs.org/emacs/emacs_mswin.html">http://ergoemacs.org/emacs/emacs_mswin.html</a> 페이지를 참조했습니다.</p>
+</div>
+<h2><a class="header" href="#설정파일을-확인하기" id="설정파일을-확인하기">설정파일을 확인하기</a></h2>
+<p>설정파일에 <code>(message &quot;hi config file&quot;)</code> 을 입력해 봅시다. <code>Ctrl-x Ctrl-s</code>를 눌러 저장한 뒤 emacs를 <code>Ctrl-x Ctrl-c</code>로 끕니다. 다시 emacs
+를 켠 뒤 <code>*Messages*</code> 버퍼에 &quot;hi config file&quot;이 출력되는지 확인합니다.</p>
+<p><code>Ctrl-x b</code>로 다른 버퍼를 열 수 있습니다. 버퍼는 이맥스가 연 파일
+목록이라고 이해할 수 있습니다. <code>*Messages*</code> 를 입력하고 엔터키를
+누르면 <code>*Messages*</code> 버퍼가 열립니다. <code>*Messages*</code> 버퍼는 이맥스가
+특별히 취급하는 버퍼로 항상 존재합니다.</p>
+<h2><a class="header" href="#initel에서-명령어-바로-실행하기" id="initel에서-명령어-바로-실행하기">init.el에서 명령어 바로 실행하기</a></h2>
+<p>설정파일을 수정할 때마다 emacs를 껐다 켜는 건 귀찮습니다. 이맥스에서
+실행하고 싶은 설정 코드의 닫는 괄호 뒤에 커서를 두고 <code>ctrl-x ctr-e</code>를
+누르면 해당 설정 코드가 실행됩니다. 패키지 설치, 키 매핑 변경 등의
+설정은 emacs를 껐다 켜지 않아도 쉽게할 수 있습니다. 익숙해지면 삶의
+질이 달라집니다.</p>
+<p>중첩된 복잡한 설정 코드가 있을 때 중첩된 명령의 안쪽 서브 코드만 실행하기도 가능합니다.</p>
+<pre><code class="language-elisp">;; 예를들어
+
+(progn
+  (message &quot;first&quot;);; 이 괄호에서 ctrl-x ctrl-e를 누르면 &quot;first&quot;만 출력됩니다.
+  (message &quot;second&quot;);; 이 괄호에서 ctrl-x ctrl-e를 누르면 &quot;second&quot;만 출력됩니다.
+) ;; 이 괄호에서 ctrl-x ctrl-e 하면 first와 second 모두
+;; 출력됩니다.
+</code></pre>
+<p>if문처럼 조건문 안의 코드도 쉽게 실행해볼 수 있습니다.</p>
+<pre><code class="language-elisp">(if nil
+  (message &quot;true&quot;);;여기 닫는 괄호에서 실행하면 &quot;true&quot;가 출력됩니다.
+  (message &quot;false&quot;)
+);; 이 식은 실행하면 &quot;false&quot;만 출력합니다.
+</code></pre>
+<h2><a class="header" href="#다른-사람의-작업으로부터-영감-얻기" id="다른-사람의-작업으로부터-영감-얻기">다른 사람의 작업으로부터 영감 얻기</a></h2>
+<p>다른 사람의 소스코드를 읽으면 코드를 더 잘 짤 수 있게 되듯이, 다른
+사람의 설정 파일을 읽으면 자신의 설정파일을 더 잘 만들 수 있습니다.
+여기 참고할만단 다른 설정파일들의 링크를 달아놓겠습니다.</p>
+<ul>
+<li><a href="https://pages.sachachua.com/.emacs.d/Sacha.html#monthly-reviews">Sacha님의 설정
+파일</a>
+매주 이맥스 뉴스를 모아서 공유해주시는 Sacha님의 설정파일입니다.</li>
+</ul>
 <h1><a class="header" href="#패키지-추가하기" id="패키지-추가하기">패키지 추가하기</a></h1>
+<p>꾸미기의 시작은 패키지입니다. 다른 사람들이 만들어 둔 유용한 도구들을
+잔뜩 설치해서 나만의 이맥스를 만들어 봅시다.</p>
+<p>emacs에서 패키지를 관리하는 방식은 여러가지가 있습니다. 그 중
+use-package를 사용한 방법을 알려드리겠습니다. use-package는 패키지
+설치와 설정을 한 곳에 묶을 수 있어 설정파일 관리를 더 쉽게 만들어
+줍니다.</p>
+<h2><a class="header" href="#use-package-설치하기" id="use-package-설치하기">use-package 설치하기</a></h2>
+<p>use-package를 설치하고 나면 다른 패키지들은 쉽게 설치할 수 있습니다.
+하지만 use-package는 use-package로 설치할 수 없기 때문에 약간의 귀찮은
+과정을 거쳐야 합니다.</p>
+<h3><a class="header" href="#melpa-저장소-추가" id="melpa-저장소-추가">melpa 저장소 추가</a></h3>
+<pre><code class="language-elisp">(require 'package)
+(add-to-list 'package-archives '(&quot;melpa&quot; . &quot;https://melpa.org/packages/&quot;) t)
+(package-initialize)
+</code></pre>
+<p>use-package package는 melpa에서 다운받을 수 있습니다. 위 세 줄을 emacs
+설정 파일에 추가해 주세요.</p>
+<p>emacs의 패키지들은 elpa와 melpa에서 다운받을 수 있습니다. elpa는
+이맥스 공식 레포지토리며 melpa에 비해 패키지를 올리기가 어렵습니다.
+melpa는 공식 레포는 아니지만 쉽게 패키지를 올릴 수 있고 이미 많은 패키지들이 올라가 있습니다.<sup class="footnote-reference"><a href="#elpa-melpa">1</a></sup></p>
+<div class="footnote-definition" id="elpa-melpa"><sup class="footnote-definition-label">1</sup>
+<p>StackOverflow의 <a href="https://emacs.stackexchange.com/a/270/11743">이
+답변</a>이 잘 설명하고
+있습니다.</p>
+</div>
+<h3><a class="header" href="#package-install-명령으로-use-package-설치하기" id="package-install-명령으로-use-package-설치하기">package-install 명령으로 use-package 설치하기</a></h3>
+<p>melpa 저장소를 추가했다면(위의 세 줄을 작성한 뒤 이맥스를 껐다 켜거나,
+하나 하나 <code>ctrl-x ctrl-e</code>로 실행해 주세요.) package-install 명령어로
+use-package를 설치할 수 있습니다.</p>
+<p><code>alt-x</code>를<sup class="footnote-reference"><a href="#alt-meta">2</a></sup> 누르시면 이맥스 화면 아래에 emacs 함수를 실행할
+수 있는 창이 하나 뜹니다. 앞으로 이 창을 매우 많이 쓸 예정입니다. 이
+창에서 <code>package-refresh-contents</code>를 치고 엔터를 쳐주세요. 이맥스가
+melpa의 패키지 목록을 다운받아 올 거에요. 잠시 시간이 걸릴 수
+있습니다.</p>
+<p>다시 <code>alt-x</code>를 치고 <code>package-install</code>을 치고 엔터를 칩니다. 그러면
+이맥스가 설치할 패키지를 물어볼텐데 여기에 &quot;use-package&quot;를 입력하고
+엔터를 쳐주세요. 별다른 에러가 나지 않았다면 &quot;use-package&quot; 패키지가 잘 설치된 겁니다.</p>
+<div class="footnote-definition" id="alt-meta"><sup class="footnote-definition-label">2</sup>
+<p>이맥스에서는 alt 대신 M 혹은 meta를 자주 씁니다. 이
+글에서는 alt를 쓸게요. alt와 meta의 관계는 좀 복잡합니다. 여기서
+다루진 않을게요.</p>
+</div>
+<h3><a class="header" href="#use-package-설정하기" id="use-package-설정하기">use-package 설정하기</a></h3>
+<p>설정파일에 아래 두 줄의 코드를 추가합니다.<sup class="footnote-reference"><a href="#use-package-config">3</a></sup></p>
+<pre><code class="language-elisp">(eval-when-compile
+  (require 'use-package))
+</code></pre>
+<p>위 두 라인을 실행하면 use-package 설정이 끝납니다.</p>
+<div class="footnote-definition" id="use-package-config"><sup class="footnote-definition-label">3</sup>
+<p><a href="https://github.com/jwiegley/use-package#getting-started">use-package README.md의 Getting
+started</a>
+챕터에 적혔는 내용입니다.</p>
+</div>
+<h3><a class="header" href="#첫-번째-패키지-doom-modeline-설치하기" id="첫-번째-패키지-doom-modeline-설치하기">첫 번째 패키지: doom-modeline 설치하기</a></h3>
+<p>emacs의 버퍼 아래엔 현재 수정하고 있는 파일이 무엇인지 보여주는 한
+줄의 ui가 있습니다. 이를 mode line이라고 부릅니다. 기본 UI가 투박하기
+때문에 많은 사람들이 이 UI를 개선해서 사용합니다. doom-modeline도
+mode-line을 꾸며주는 패키지 입니다.</p>
+<pre><code class="language-elisp">(use-package doom-modeline
+  :ensure t
+  :hook (after-init . doom-modeline-mode))
+</code></pre>
+<p>위 세 줄을 설정파일에 추가하고 실행합니다. 그러면 doom-modeline의 설치
+밎 설정이 끝납니다. 참 쉽죠. 위에 보시면 <code>(after-init . doom-modeline-mode)</code> 코드가 있습니다. 이는 use-package의 인자로
+emacs가 켜졌을 때 <code>(doom-modeline-mode)</code> 함수를 실행하라는 의미입니다.
+emacs를 껐다 켜기 귀잖으신 분들은 <code>alt-x</code> 누른 뒤
+<code>doom-modeline-mode</code>를 실행하여 수동으로 킬 수도 있습니다. 실행하시면
+modeline이 깔끔해진 것을 볼 수 있습니다.</p>
 
                     </main>
 
