@@ -12,3 +12,5 @@ build-dir = "docs"
 [output.html]
 google-analytics = "G-WEJ2L04CF3"
 cname = "emacs-deco.majecty.com"
+theme = "src/theme"
+default-theme = "light"
