@@ -3,11 +3,11 @@
 ## 빌드하기
 
 ```sh
-mdbook build -d docs
+mdbook build
 ```
 
 ## 개발하기
 
 ```sh
-mdbook serve -o -d docs
+mdbook serve -o
 ```

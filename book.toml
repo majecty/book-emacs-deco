@@ -3,4 +3,12 @@ authors = ["ParkJuhyung"]
 language = "ko"
 multilingual = false
 src = "src"
-title = "이맥스 꾸미기"
+title = "이맥스 꾸미기 2021"
+description = "바닥부터 이맥스를 꾸미는 법"
+
+[build]
+build-dir = "docs"
+
+[output.html]
+google-analytics = "G-WEJ2L04CF3"
+cname = "emacs-deco.majecty.com"
