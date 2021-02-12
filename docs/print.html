@@ -97,7 +97,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="start.html"><strong aria-hidden="true">1.</strong> 시작하기</a></li><li class="chapter-item expanded "><a href="get-started-emacs-lisp.html"><strong aria-hidden="true">2.</strong> emacs lisp 시작하기</a></li><li class="chapter-item expanded "><a href="what-is-this.html"><strong aria-hidden="true">3.</strong> 이건 무슨 문법이지</a></li><li class="chapter-item expanded "><a href="get-started-config-file.html"><strong aria-hidden="true">4.</strong> 설정 파일 시작하기</a></li><li class="chapter-item expanded "><a href="add-packages.html"><strong aria-hidden="true">5.</strong> 패키지 추가하기</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">6.</strong> 기타</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">6.1.</strong> 프로젝트 관리</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">6.1.1.</strong> projectile</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">6.1.2.</strong> local dir variables</div></li></ol></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="start.html"><strong aria-hidden="true">1.</strong> 시작하기</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="get-started-emacs-lisp.html"><strong aria-hidden="true">1.1.</strong> emacs lisp 시작하기</a></li><li class="chapter-item expanded "><a href="what-is-this.html"><strong aria-hidden="true">1.2.</strong> 이건 무슨 문법이지</a></li><li class="chapter-item expanded "><a href="get-started-config-file.html"><strong aria-hidden="true">1.3.</strong> 설정 파일 시작하기</a></li><li class="chapter-item expanded "><a href="add-packages.html"><strong aria-hidden="true">1.4.</strong> 패키지 추가하기</a></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">2.</strong> 패키지 깔기</div></li><li><ol class="section"><li class="chapter-item expanded "><a href="emacs-minibuffer-completion.html"><strong aria-hidden="true">2.1.</strong> 이맥스 자동완성시키기</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">2.2.</strong> lsp 랭기지 서버 설치하기</div></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">3.</strong> 기타</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">3.1.</strong> 프로젝트 관리</div></li><li><ol class="section"><li class="chapter-item expanded "><div><strong aria-hidden="true">3.1.1.</strong> projectile</div></li><li class="chapter-item expanded "><div><strong aria-hidden="true">3.1.2.</strong> local dir variables</div></li></ol></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -374,6 +374,61 @@ emacs가 켜졌을 때 <code>(doom-modeline-mode)</code> 함수를 실행하라�
 emacs를 껐다 켜기 귀잖으신 분들은 <code>alt-x</code> 누른 뒤
 <code>doom-modeline-mode</code>를 실행하여 수동으로 킬 수도 있습니다. 실행하시면
 modeline이 깔끔해진 것을 볼 수 있습니다.</p>
+<h1><a class="header" href="#이맥스-자동완성시키기" id="이맥스-자동완성시키기">이맥스 자동완성시키기</a></h1>
+<p>이맥스의 기본 기능들은 잘 동작하지만 어떤 기능들이 있는지 쉽게 찾기
+힘듭니다. <code>alt-x</code>로 함수를 실행할 때에도 원하는 함수를 정확히 할고있는
+게 아니라면 필요한 함수를 찾기 힘듭니다. ivy나 help 플러그인은 원하는
+기능을 쉽게 찾을 수 있게 도와줍니다.</p>
+<h2><a class="header" href="#ivy-counsel-swiper" id="ivy-counsel-swiper">Ivy, Counsel, Swiper</a></h2>
+<p>Ivy는 컨텍스트와 상관없이 이맥스에서 자동완성을 도와주는 도구입니다.
+Ivy는 Ivy를 사용해 이맥스의 기본 기능을 개선시킨 함수들을 제공하는데
+이를 Counsel이라고 부릅니다. Swiper는 이맥스의 검색 기능(Ctrl-s)를
+개선시킨 함수입니다. 이 세 종류의 기능을 보통 함께 사용합니다.</p>
+<h2><a class="header" href="#설치하기" id="설치하기">설치하기</a></h2>
+<p>use-package를 사용해서 쉽게 설치할 수 있습니다. :config 다음의
+내용들은 <a href="https://github.com/abo-abo/swiper#small-config-example">ivy GitHuub
+README.md</a>의
+예시 설정에서 가져왔습니다.</p>
+<pre><code class="language-elisp">(use-package counsel
+  :ensure t)
+
+(use-package ivy
+  :ensure t
+  :config
+  (setq ivy-use-virtual-buffers t)
+  (setq enable-recursive-minibuffers t)
+  ;; enable this if you want `swiper' to use it
+  ;; (setq search-default-mode #'char-fold-to-regexp)
+  (global-set-key &quot;\C-s&quot; 'swiper)
+  (global-set-key (kbd &quot;C-c C-r&quot;) 'ivy-resume)
+  (global-set-key (kbd &quot;&lt;f6&gt;&quot;) 'ivy-resume)
+  (global-set-key (kbd &quot;M-x&quot;) 'counsel-M-x)
+  (global-set-key (kbd &quot;C-x C-f&quot;) 'counsel-find-file)
+  (global-set-key (kbd &quot;&lt;f1&gt; f&quot;) 'counsel-describe-function)
+  (global-set-key (kbd &quot;&lt;f1&gt; v&quot;) 'counsel-describe-variable)
+  (global-set-key (kbd &quot;&lt;f1&gt; o&quot;) 'counsel-describe-symbol)
+  (global-set-key (kbd &quot;&lt;f1&gt; l&quot;) 'counsel-find-library)
+  (global-set-key (kbd &quot;&lt;f2&gt; i&quot;) 'counsel-info-lookup-symbol)
+  (global-set-key (kbd &quot;&lt;f2&gt; u&quot;) 'counsel-unicode-char)
+  (global-set-key (kbd &quot;C-c g&quot;) 'counsel-git)
+  (global-set-key (kbd &quot;C-c j&quot;) 'counsel-git-grep)
+  (global-set-key (kbd &quot;C-c k&quot;) 'counsel-ag)
+  (global-set-key (kbd &quot;C-x l&quot;) 'counsel-locate)
+  (global-set-key (kbd &quot;C-S-o&quot;) 'counsel-rhythmbox)
+  (define-key minibuffer-local-map (kbd &quot;C-r&quot;) 'counsel-minibuffer-history))
+</code></pre>
+<p>설치한 이후 <code>alt-x</code> 를 누르면 예상되는 함수들이 여럿 나오고, 함수 이름
+중 일부만 작성해도 원하는 함수를 쉽게 찾을 수 있습니다. 이외에도
+도움말이나 검색(<code>ctrl-x</code>)도 좀 더 쓰기 편하게 쓸 수 있습니다.</p>
+<h2><a class="header" href="#잡다한-ivy-팁들" id="잡다한-ivy-팁들">잡다한 ivy 팁들</a></h2>
+<h3><a class="header" href="#alt-x-함수-이름-중간부터-검색하기" id="alt-x-함수-이름-중간부터-검색하기">alt-x 함수 이름 중간부터 검색하기</a></h3>
+<p><code>alt-x</code>를 누르면 <code>^</code>키가 미리 눌러져 있습니다. <code>^</code>는 정규표현식에서
+사용하는 기호로 단어의 시작을 의미합니다. 따라서 <code>^</code> 이후에 글자를
+입력하면 항상 함수 이름의 시작 글자부터 검색하게 됩니다. <code>^theme</code>를
+검색하면 theme로 시작하는 함수들을 검색합니다. <code>theme</code>를 검색하면
+theme가 들어간 모든 함수를 검색합니다.</p>
+<h3><a class="header" href="#띄어쓰기를-사용해서-여러-단어-검색" id="띄어쓰기를-사용해서-여러-단어-검색">띄어쓰기를 사용해서 여러 단어 검색</a></h3>
+<p><code>theme</code>를 검색하면 &quot;theme&quot;가 정확히 들어간 함수만 검색합니다. <code>the me</code>를 검색하면 함수 이름에 &quot;the&quot;와 &quot;me&quot;가 포함된 함수를 검색합니다.</p>
 
                     </main>
 
