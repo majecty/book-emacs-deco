@@ -88,3 +88,4 @@ emacs가 켜졌을 때 `(doom-modeline-mode)` 함수를 실행하라는 의미�
 emacs를 껐다 켜기 귀잖으신 분들은 `alt-x` 누른 뒤
 `doom-modeline-mode`를 실행하여 수동으로 킬 수도 있습니다. 실행하시면
 modeline이 깔끔해진 것을 볼 수 있습니다.
+
