@@ -11,3 +11,19 @@ mdbook build
 ```sh
 mdbook serve -o
 ```
+
+## 이맥스 실행하기
+
+딱 한 번 실행할 것
+
+```sh
+cd docker
+./build-docker.sh
+```
+
+매번 실행할 것
+
+```sh
+cd docker
+./run-docker.sh
+```
